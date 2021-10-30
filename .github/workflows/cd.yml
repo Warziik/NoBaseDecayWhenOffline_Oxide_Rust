@@ -1,0 +1,24 @@
+﻿name: Deployment
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  web-deploy:
+    name: 🚀 Deploy to the moon!
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Send plugin to Rust server
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: NoBaseDecayWhenOffline.cs
+          remote: rust/oxide/plugins/NoBaseDecayWhenOffline.cs
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
